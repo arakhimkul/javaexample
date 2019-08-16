@@ -6,9 +6,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ExpandAppsAndDocs extends TestBase {
-    public static String nextToOpenItemXPath = "(//li[contains(@class,'selected')])[last()]/following::li";
-    public static String appItemCss = "li#app-";
-    public static String goodContent = "h1";
+    public static String NEXT_TO_OPEN_ITEM_XPATH = "(//li[contains(@class,'selected')])[last()]/following::li";
+    public static String APP_ITEM_CSS = "li#app-";
+    public static String GOOD_CONTENT = "h1";
 
     @BeforeMethod
     public void start() {
@@ -17,12 +17,12 @@ public class ExpandAppsAndDocs extends TestBase {
 
     @Test
     public void ExpandAppsAndDocs() {
-        driver.findElement(By.cssSelector(appItemCss)).click(); // Expanding the first item to click one-by-one afterwards
+        driver.findElement(By.cssSelector(APP_ITEM_CSS)).click(); // Expanding the first item to click one-by-one afterwards
 
         do{
-            driver.findElement(By.xpath(nextToOpenItemXPath)).click();
-            Assert.assertTrue(isElementPresent(By.cssSelector(goodContent)));
-        } while (driver.findElements(By.xpath(nextToOpenItemXPath)).size()!=0);
+            driver.findElement(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).click();
+            Assert.assertTrue(isElementPresent(By.cssSelector(GOOD_CONTENT)));
+        } while (driver.findElements(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).size()!=0);
     }
 
 
