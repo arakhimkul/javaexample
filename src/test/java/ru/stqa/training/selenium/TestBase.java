@@ -20,6 +20,7 @@ public class TestBase {
     protected WebDriver driver;
     protected WebDriverWait wait;
     protected static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
+    protected static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
 
 
     @BeforeMethod
@@ -110,6 +111,20 @@ public class TestBase {
         } return items;
     }
 
+    public List<String> getZonesInMenu() {
+        int columnNumber = getHeaderColumnNumber("Zone");
+        List<String> items = new ArrayList<String>();
+        List<WebElement> rows = getRows();
+        for (WebElement row:rows) {
+            if (!(row.findElement(By.cssSelector("td")).getAttribute("colspan") ==null)){
+                continue;
+            }
+            WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")")).findElement(By.cssSelector("select option[selected='selected']"));
+            if (!cellValue.getAttribute("textContent").equals("")) {
+                items.add(cellValue.getAttribute("textContent"));
+            }
+        } return items;
+    }
 
     @AfterClass
     public void stop() {
