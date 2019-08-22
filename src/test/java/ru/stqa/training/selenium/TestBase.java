@@ -119,7 +119,7 @@ public class TestBase {
             if (!(row.findElement(By.cssSelector("td")).getAttribute("colspan") ==null)){
                 continue;
             }
-            WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")")).findElement(By.cssSelector("select option[selected='selected']"));
+            WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")>select>option[selected='selected']"));
             if (!cellValue.getAttribute("textContent").equals("")) {
                 items.add(cellValue.getAttribute("textContent"));
             }
