@@ -16,6 +16,9 @@ public class LiteCartProduct extends TestBase {
     public String productDiscountedPrice;
     public String productPriceColor;
     public String productDiscountedPriceColor;
+    public String productPriceStrikethrough;
+    public String productDiscountedPriceBold;
+
     public String productPriceSize;
     public String productDiscountedPriceSize;
 
@@ -25,10 +28,20 @@ public class LiteCartProduct extends TestBase {
     public LiteCartProduct(List<WebElement> productsInSection, int productNumber) {
         WebElement product = productsInSection.get(productNumber-1);
         productName = product.findElement(By.cssSelector("div.name")).getAttribute("textContent");
-        productPrice = product.findElement(By.cssSelector("div.price-wrapper>s.regular-price")).getAttribute("textContent");
-        productDiscountedPrice = product.findElement(By.cssSelector("div.price-wrapper>strong.campaign-price")).getAttribute("textContent");
-        productPriceColor = product.findElement(By.cssSelector("div.price-wrapper>s.regular-price")).getAttribute("textContent");
 
+        WebElement productPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.regular-price"));
+        WebElement productDiscountedPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.campaign-price"));
 
+        productPrice = productPriceElement.getAttribute("textContent");
+        productDiscountedPrice = productDiscountedPriceElement.getAttribute("textContent");
+
+        productPriceColor = productPriceElement.getCssValue("color");
+        productDiscountedPriceColor = productDiscountedPriceElement.getCssValue("color");
+
+        productPriceStrikethrough = productPriceElement.getTagName();
+        productDiscountedPriceBold = productDiscountedPriceElement.getTagName();
+
+        productPriceSize = productPriceElement.getCssValue("font-size");
+        productDiscountedPriceSize = productDiscountedPriceElement.getCssValue("font-size");
     }
 }
