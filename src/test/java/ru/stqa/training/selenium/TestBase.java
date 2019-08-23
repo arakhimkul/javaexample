@@ -21,6 +21,7 @@ public class TestBase {
     protected WebDriverWait wait;
     protected static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
     protected static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
+    protected static String LITECART_HOME_PAGE = "http://localhost/litecart";
 
 
     @BeforeMethod
@@ -28,7 +29,7 @@ public class TestBase {
 
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(2,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 
 //        WebDriverManager.iedriver().setup();
 //        driver = new InternetExplorerDriver();
@@ -41,7 +42,7 @@ public class TestBase {
 //        driver = new FirefoxDriver(options);
 
 
-        wait = new WebDriverWait(driver, 1);
+        wait = new WebDriverWait(driver, 5);
     }
 
     public boolean isElementPresent(By locator){
@@ -131,5 +132,8 @@ public class TestBase {
         driver.quit();
         driver = null;
     }
+
+
+
 
 }

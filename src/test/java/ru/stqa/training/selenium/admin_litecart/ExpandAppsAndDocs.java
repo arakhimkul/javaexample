@@ -1,9 +1,10 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.admin_litecart;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.stqa.training.selenium.TestBase;
 
 public class ExpandAppsAndDocs extends TestBase {
     public static String NEXT_TO_OPEN_ITEM_XPATH = "(//li[contains(@class,'selected')])[last()]/following::li";

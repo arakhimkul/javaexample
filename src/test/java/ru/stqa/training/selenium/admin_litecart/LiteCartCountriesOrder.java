@@ -1,8 +1,9 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.admin_litecart;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.stqa.training.selenium.TestBase;
 
 import java.util.List;
 

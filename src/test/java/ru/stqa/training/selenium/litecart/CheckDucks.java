@@ -1,9 +1,10 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.litecart;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import ru.stqa.training.selenium.TestBase;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class CheckDucks extends TestBase {
 
     @Test
     public void checkDucks() {
-        driver.get("http://localhost/litecart");
+        driver.get(LITECART_HOME_PAGE);
         List<WebElement> allDucks = driver.findElements(By.cssSelector(PRODUCT_LOCATOR));
         for (WebElement duck:allDucks){
             List<WebElement> duckStickers = duck.findElements(By.cssSelector(PRODUCT_STICKER_LOCATOR));
