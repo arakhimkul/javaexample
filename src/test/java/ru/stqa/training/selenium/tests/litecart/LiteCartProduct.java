@@ -1,12 +1,9 @@
-package ru.stqa.training.selenium.litecart;
+package ru.stqa.training.selenium.tests.litecart;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-import ru.stqa.training.selenium.TestBase;
+import ru.stqa.training.selenium.base.TestBase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,8 +23,8 @@ public class LiteCartProduct extends TestBase {
 
 
     public LiteCartProduct(List<WebElement> productsInSection, int productNumber) {
-        WebElement product = productsInSection.get(productNumber-1);
-        productName = product.findElement(By.cssSelector("div.name")).getAttribute("textContent");
+        WebElement product = productsInSection.get(productNumber);
+        productName = product.findElement(By.cssSelector("div.name,h1.title")).getAttribute("textContent");
 
         WebElement productPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.regular-price"));
         WebElement productDiscountedPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.campaign-price"));

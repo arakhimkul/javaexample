@@ -1,80 +1,66 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.pages;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.Assert;
+import ru.stqa.training.selenium.base.DriverHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-public class TestBase {
+public class LiteCartAdminPage {
 
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    protected static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
-    protected static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
-    protected static String LITECART_HOME_PAGE = "http://localhost/litecart";
+    private static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
+    private static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
+    private static String NEXT_TO_OPEN_ITEM_XPATH = "(//li[contains(@class,'selected')])[last()]/following::li";
+    private static String APP_ITEM_CSS = "li#app-";
+    private static String GOOD_CONTENT = "h1";
 
+    private WebDriver driver = DriverHolder.getDriver();
+    WebDriverWait wait = new WebDriverWait(driver, 5);
 
-    @BeforeMethod
-    public void setup() {
-
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-
-//        WebDriverManager.iedriver().setup();
-//        driver = new InternetExplorerDriver();
-
-//        WebDriverManager.firefoxdriver().setup();
-//        FirefoxOptions options = new FirefoxOptions();
-//        options
-//                .setLegacy(true)
-//                .setBinary("C:\\Program Files\\Firefox Nightly\\firefox.exe");
-//        driver = new FirefoxDriver(options);
-
-
-        wait = new WebDriverWait(driver, 5);
-    }
-
-    public boolean isElementPresent(By locator){
-        if(driver.findElements(locator).size()!=0){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isSorted(List<String> list)
-    {
-        for(int a=0;a<list.size()-1;a++)
-        {
-            if(list.get(a).compareTo(list.get(a+1))>0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void login() {
-        driver.get("http://localhost/litecart/admin/");
+    public LiteCartAdminPage login() {
         driver.findElement(By.name("username")).sendKeys("admin");
         driver.findElement(By.name("password")).sendKeys("admin");
         driver.findElement(By.name("login")).click();
         wait.until(titleIs("My Store"));
+        return this;
     }
 
+    public LiteCartAdminPage clickOnFirstApp() {
+        driver.findElement(By.cssSelector(APP_ITEM_CSS)).click(); // Expanding the first item to click one-by-one afterwards
+        return this;
+    }
+
+    public LiteCartAdminPage clickAndCheckEachApp() {
+        do {
+            driver.findElement(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).click();
+            Assert.assertTrue(isElementPresent(By.cssSelector(GOOD_CONTENT)));
+        } while (driver.findElements(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).size() != 0);
+        return this;
+    }
+
+    public LiteCartAdminPage openCountriesApp() {
+        driver.get(COUNTRIES_PAGE);
+        return this;
+    }
+
+    public LiteCartAdminPage openGeoZonesApp() {
+        driver.get(GEO_ZONES_PAGE);
+        return this;
+    }
+
+    public LiteCartAdminPage openCustomLink(String Url) {
+        driver.get(Url);
+        return this;
+    }
 
     public int getHeaderColumnNumber(String columnName) {
-        List<WebElement> headers = driver.findElements(By.cssSelector("table tr.header th"));
+        List<WebElement> headers = DriverHolder.getDriver().findElements(By.cssSelector("table tr.header th"));
         for (int arraySize = 0; arraySize < headers.size(); arraySize++) {
             if (headers.get(arraySize).getText().equals(columnName)) {
                 return arraySize + 1;
@@ -84,7 +70,7 @@ public class TestBase {
     }
 
     public List<WebElement> getRows() {
-        return driver.findElements(By.cssSelector("table.dataTable tr:not(.header):not(.footer)"));
+        return DriverHolder.getDriver().findElements(By.cssSelector("table.dataTable tr:not(.header):not(.footer)"));
     }
 
     public List<String> getNames() {
@@ -127,13 +113,16 @@ public class TestBase {
         } return items;
     }
 
-    @AfterClass
-    public void stop() {
-        driver.quit();
-        driver = null;
+    public boolean isSorted(List<String> list) {
+        for (int a = 0; a < list.size() - 1; a++) {
+            if (list.get(a).compareTo(list.get(a + 1)) > 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
-
-
-
+    private boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() != 0;
+    }
 }
