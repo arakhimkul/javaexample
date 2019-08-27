@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
+import ru.stqa.training.selenium.base.objects.LiteCartProduct;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,24 +17,39 @@ public class LiteCartPage {
     public static String PRODUCT_STICKER_LOCATOR = "div[class*=sticker]";
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
 
     public LiteCartPage checkProductsHaveStickers() {
         List<WebElement> allProducts = driver.findElements(By.cssSelector(PRODUCT_LOCATOR));
         for (WebElement product : allProducts) {
             List<WebElement> productStickers = product.findElements(By.cssSelector(PRODUCT_STICKER_LOCATOR));
-            Assert.assertTrue(productStickers.size() == 1);
+            Assert.assertEquals(1, productStickers.size());
         }
         return this;
     }
 
-    public List<WebElement> getProductsOfSection(WebElement productSection, String sectionName){
+    private List<WebElement> getProductsOfSection(WebElement productSection, String sectionName) {
         List<WebElement> sections = productSection.findElements(By.cssSelector("div[id*='box-'][class=box]"));
         List<WebElement> productsInSection = new ArrayList<WebElement>();
-        for (WebElement section:sections){
+        for (WebElement section : sections) {
             if (section.findElement(By.cssSelector("h3.title,h1.title")).getAttribute("textContent").equals(sectionName)) {
                 productsInSection.add(section);
             }
-        } return productsInSection;
+        }
+        return productsInSection;
     }
+
+    public LiteCartProduct getProductObjectFromHomePage(String sectionName, int productNumber) {
+        WebElement content = driver.findElement(By.cssSelector("div#main>div.middle>div.content"));
+        List<WebElement> productsOfSection = getProductsOfSection(content, sectionName);
+        WebElement product = productsOfSection.get(productNumber);
+        return new LitecartFragments().liteCartProductSetObject(product);
+
+    }
+
+    public LiteCartPage clickOnItemInSectionByIndex(String sectionName, int index) {
+        driver.findElement(By.xpath("//h3[contains(.,'" + sectionName + "')]/..//li")).click();
+        return this;
+    }
+
+
 }

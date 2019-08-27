@@ -20,5 +20,4 @@ public class MyFirstTest extends TestBase {
         WebDriverWait wait = new WebDriverWait(DriverHolder.getDriver(), 5);
         wait.until(titleIs("webdriver - Поиск в Google"));
     }
-
 }
