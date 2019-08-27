@@ -48,19 +48,19 @@ public class LiteCartProduct extends TestBase {
         this.productDiscountedPriceColor = productDiscountedPriceColor;
     }
 
-    public String getProductPriceStrikethrough() {
+    public boolean getProductPriceStrikethrough() {
         return productPriceStrikethrough;
     }
 
-    public void setProductPriceStrikethrough(String productPriceStrikethrough) {
+    public void setProductPriceStrikethrough(boolean productPriceStrikethrough) {
         this.productPriceStrikethrough = productPriceStrikethrough;
     }
 
-    public String getProductDiscountedPriceBold() {
+    public boolean getProductDiscountedPriceBold() {
         return productDiscountedPriceBold;
     }
 
-    public void setProductDiscountedPriceBold(String productDiscountedPriceBold) {
+    public void setProductDiscountedPriceBold(boolean productDiscountedPriceBold) {
         this.productDiscountedPriceBold = productDiscountedPriceBold;
     }
 
@@ -85,33 +85,8 @@ public class LiteCartProduct extends TestBase {
     public String productDiscountedPrice;
     public String productPriceColor;
     public String productDiscountedPriceColor;
-    public String productPriceStrikethrough;
-    public String productDiscountedPriceBold;
+    public boolean productPriceStrikethrough;
+    public boolean productDiscountedPriceBold;
     public String productPriceSize;
     public String productDiscountedPriceSize;
-
-
-
-
-
-//    public LiteCartProduct(List<WebElement> productsInSection, int productNumber) {
-//        WebElement product = productsInSection.get(productNumber);
-//        productName = product.findElement(By.cssSelector("div.name,h1.title")).getAttribute("textContent");
-//
-//        WebElement productPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.regular-price"));
-//        WebElement productDiscountedPriceElement = product.findElement(By.cssSelector("div.price-wrapper>*.campaign-price"));
-//
-//        productPrice = productPriceElement.getAttribute("textContent");
-//        productDiscountedPrice = productDiscountedPriceElement.getAttribute("textContent");
-//
-//        productPriceColor = productPriceElement.getCssValue("color");
-//        productDiscountedPriceColor = productDiscountedPriceElement.getCssValue("color");
-//
-//        productPriceStrikethrough = productPriceElement.getTagName();
-//        productDiscountedPriceBold = productDiscountedPriceElement.getTagName();
-//
-//        productPriceSize = productPriceElement.getCssValue("font-size");
-//        productDiscountedPriceSize = productDiscountedPriceElement.getCssValue("font-size");
-//    }
-
 }

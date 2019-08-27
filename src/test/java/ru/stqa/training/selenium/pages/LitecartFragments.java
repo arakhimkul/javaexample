@@ -16,8 +16,14 @@ public class LitecartFragments {
         liteCartProduct.setProductDiscountedPrice(productDiscountedPriceElement.getAttribute("textContent"));
         liteCartProduct.setProductPriceColor(productPriceElement.getCssValue("color"));
         liteCartProduct.setProductDiscountedPriceColor(productDiscountedPriceElement.getCssValue("color"));
-        liteCartProduct.setProductPriceStrikethrough(productPriceElement.getTagName());
-        liteCartProduct.setProductDiscountedPriceBold(productDiscountedPriceElement.getTagName());
+
+        if (productPriceElement.getTagName().equals("s") || productPriceElement.getTagName().equals("del")) {
+            liteCartProduct.setProductPriceStrikethrough(true);
+        }
+
+        if (productPriceElement.getTagName().equals("strong") || productPriceElement.getTagName().equals("b")) {
+            liteCartProduct.setProductDiscountedPriceBold(true);
+        }
         liteCartProduct.setProductPriceSize(productPriceElement.getCssValue("font-size"));
         liteCartProduct.setProductDiscountedPriceSize(productDiscountedPriceElement.getCssValue("font-size"));
         return liteCartProduct;
