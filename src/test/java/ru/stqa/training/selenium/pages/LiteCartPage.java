@@ -1,10 +1,8 @@
 package ru.stqa.training.selenium.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
@@ -54,4 +52,8 @@ public class LiteCartPage {
     }
 
 
+    public LiteCartPage clickCreateAccountLink() {
+        driver.findElement(By.xpath("//a[contains(.,'Create Account')]/..")).click();
+        return this;
+    }
 }

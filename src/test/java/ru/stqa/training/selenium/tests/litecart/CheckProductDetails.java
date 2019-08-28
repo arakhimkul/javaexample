@@ -16,7 +16,6 @@ public class CheckProductDetails extends TestBase {
 
     private LiteCartPage liteCartPage;
     private LiteCartSubcategoryPage liteCartSubcategoryPage;
-    public static int PRODUCT_INDEX = 0;    //starting with 0
 
     @BeforeMethod
     public void start() {
@@ -28,6 +27,8 @@ public class CheckProductDetails extends TestBase {
     @Test
     public void CheckProductDetails() {
 
+        //starting with 0
+        int PRODUCT_INDEX = 0;
         LiteCartProduct productObjectFromHomePage = liteCartPage.getProductObjectFromHomePage("Campaigns", PRODUCT_INDEX);
         liteCartPage.clickOnItemInSectionByIndex("Campaigns", PRODUCT_INDEX);
         LiteCartProduct productObjectFromSubcategory = liteCartSubcategoryPage.getProductObjectFromSubcategoryPage();
