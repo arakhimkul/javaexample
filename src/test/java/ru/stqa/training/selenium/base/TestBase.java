@@ -1,8 +1,11 @@
 package ru.stqa.training.selenium.base;
 
+import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
@@ -17,22 +20,12 @@ public class TestBase {
     @BeforeMethod
     public void setup() {
 
-        WebDriverManager.chromedriver().setup();
-        DriverHolder.setDriver(new ChromeDriver());
+        String driverName = System.getProperty("webdriver.name");
+        DriverManagerType managerType = DriverManagerType.valueOf(driverName);
+        WebDriverManager.getInstance(managerType).setup();
+
+        DriverHolder.setDriver(managerType);
         driver = DriverHolder.getDriver();
-
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-
-//        WebDriverManager.iedriver().setup();
-//        driver = new InternetExplorerDriver();
-
-//        WebDriverManager.firefoxdriver().setup();
-//        FirefoxOptions options = new FirefoxOptions();
-//        options
-//                .setLegacy(true)
-//                .setBinary("C:\\Program Files\\Firefox Nightly\\firefox.exe");
-//        driver = new FirefoxDriver(options);
-
     }
 
     protected void openAdminHomePage() {

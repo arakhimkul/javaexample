@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
 
-public class LitecartFragments {
+public class LiteCartFragments {
 
     public LiteCartProduct liteCartProductSetObject(WebElement product) {
         LiteCartProduct liteCartProduct = new LiteCartProduct();

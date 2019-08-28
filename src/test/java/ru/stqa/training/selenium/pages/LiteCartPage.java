@@ -1,9 +1,10 @@
 package ru.stqa.training.selenium.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
@@ -42,12 +43,13 @@ public class LiteCartPage {
         WebElement content = driver.findElement(By.cssSelector("div#main>div.middle>div.content"));
         List<WebElement> productsOfSection = getProductsOfSection(content, sectionName);
         WebElement product = productsOfSection.get(productNumber);
-        return new LitecartFragments().liteCartProductSetObject(product);
+        return new LiteCartFragments().liteCartProductSetObject(product);
 
     }
 
     public LiteCartPage clickOnItemInSectionByIndex(String sectionName, int index) {
-        driver.findElement(By.xpath("//h3[contains(.,'" + sectionName + "')]/..//li")).click();
+        int productNumber = index + 1;
+        driver.findElement(By.xpath("//h3[contains(.,'" + sectionName + "')]/..//li["+productNumber+"]")).click();
         return this;
     }
 
