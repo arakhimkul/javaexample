@@ -8,7 +8,7 @@ import ru.stqa.training.selenium.pages.LiteCartAdminPage;
 
 import java.util.List;
 
-public class LiteCartCountriesOrder extends TestBase {
+public class CountryZonesOrder extends TestBase {
 
     private LiteCartAdminPage liteCartAdminPage;
 
@@ -20,9 +20,14 @@ public class LiteCartCountriesOrder extends TestBase {
     }
 
     @Test
-    public void LiteCartCountriesOrder() {
+    public void CountryZonesOrder() {
         liteCartAdminPage.openCountriesApp();
-        List<String> countries = liteCartAdminPage.getNames();
-        Assert.assertTrue(liteCartAdminPage.isSorted(countries));
+        List<String> countriesWithZonesUrls = liteCartAdminPage.getZones();
+        for (String zoneUrl:countriesWithZonesUrls) {
+            liteCartAdminPage.openCustomLink(zoneUrl);
+            List<String> countries = liteCartAdminPage.getNames();
+            Assert.assertTrue(liteCartAdminPage.isSorted(countries));
+        }
     }
 }
+

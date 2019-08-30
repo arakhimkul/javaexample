@@ -8,7 +8,7 @@ import ru.stqa.training.selenium.pages.LiteCartAdminPage;
 
 import java.util.List;
 
-public class LiteCartEditGeoZonesOrder extends TestBase {
+public class EditGeoZonesOrder extends TestBase {
     private LiteCartAdminPage liteCartAdminPage;
 
     @BeforeMethod
@@ -19,7 +19,7 @@ public class LiteCartEditGeoZonesOrder extends TestBase {
     }
 
     @Test
-    public void LiteCartEditGeoZonesOrder() {
+    public void EditGeoZonesOrder() {
         liteCartAdminPage.openGeoZonesApp();
         List<String> countriesWithZonesUrls = liteCartAdminPage.getZones();
 
