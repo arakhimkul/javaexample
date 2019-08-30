@@ -27,10 +27,19 @@ public class LiteCartRegistration extends TestBase {
         liteCartCreateAccountPage = new LiteCartCreateAccountPage();
         Assert.assertTrue(liteCartCreateAccountPage.isCaptchaDisabled());
 
-        LiteCartUser randomUserDetails = liteCartCreateAccountPage.getRandomUser();
-        liteCartCreateAccountPage.submitFormWithUser(randomUserDetails);
+        LiteCartUser liteCartUser = liteCartCreateAccountPage.getRandomUser();
+        liteCartCreateAccountPage.fillInRequiredDetails(liteCartUser);
 
 
+        liteCartCreateAccountPage.submitCreateAccountForm();
+
+
+        liteCartPage = new LiteCartPage();
+        liteCartPage.logout();
+
+
+        liteCartPage = new LiteCartPage();
+        liteCartPage.loginWithUser(liteCartUser);
     }
 
 

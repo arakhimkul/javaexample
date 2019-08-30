@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
+import ru.stqa.training.selenium.base.objects.LiteCartUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,4 +57,29 @@ public class LiteCartPage {
         driver.findElement(By.xpath("//a[contains(.,'Create Account')]/..")).click();
         return this;
     }
+
+    public LiteCartPage logout() {
+        driver.findElement(By.xpath("//a[contains(.,'Logout')]")).click();
+        return this;
+    }
+
+    public LiteCartPage loginWithUser(LiteCartUser user) {
+        WebElement loginBtn = driver.findElement(By.cssSelector("button[type='submit'][name='login']"));
+        fillInEmail(user.getEmail());
+        fillInPassword(user.getPassword());
+        loginBtn.click();
+        return this;
+    }
+
+    private LiteCartPage fillInEmail(String email) {
+        driver.findElement(By.cssSelector("input[name='email']")).sendKeys(email);
+        return this;
+    }
+
+
+    private LiteCartPage fillInPassword(String password) {
+        driver.findElement(By.xpath("//input[@name='password'][@type='password']")).sendKeys(password);
+        return this;
+    }
+
 }

@@ -43,7 +43,7 @@ public class DriverHolder {
             default:
                 throw new ParameterException("Unsupported browser");
         }
-        driver.get().manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.get().manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
     }
 }
 
