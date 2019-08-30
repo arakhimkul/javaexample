@@ -25,7 +25,7 @@ public class CheckProductDetails extends TestBase {
     }
 
     @Test
-    public void CheckProductDetails() {
+    public void checkProductDetails() {
 
         //starting with 0
         int PRODUCT_INDEX = 0;

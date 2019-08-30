@@ -17,7 +17,7 @@ public class ExpandAppsAndDocs extends TestBase {
     }
 
     @Test
-    public void ExpandAppsAndDocs() {
+    public void expandAppsAndDocs() {
         liteCartAdminPage.clickOnFirstApp()
                 .clickAndCheckEachApp();
     }

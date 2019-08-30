@@ -20,7 +20,7 @@ public class CountriesOrder extends TestBase {
     }
 
     @Test
-    public void CountriesOrder() {
+    public void countriesOrder() {
         liteCartAdminPage.openCountriesApp();
         List<String> countries = liteCartAdminPage.getNames();
         Assert.assertTrue(liteCartAdminPage.isSorted(countries));

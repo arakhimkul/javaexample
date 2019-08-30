@@ -20,7 +20,7 @@ public class CountryZonesOrder extends TestBase {
     }
 
     @Test
-    public void CountryZonesOrder() {
+    public void countryZonesOrder() {
         liteCartAdminPage.openCountriesApp();
         List<String> countriesWithZonesUrls = liteCartAdminPage.getZones();
         for (String zoneUrl:countriesWithZonesUrls) {

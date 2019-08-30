@@ -9,7 +9,7 @@ public class AdminLogin extends TestBase {
     private LiteCartAdminPage liteCartAdminPage;
 
     @Test
-    public void AdminLogin() {
+    public void adminLogin() {
         openAdminHomePage();
         liteCartAdminPage = new LiteCartAdminPage();
         liteCartAdminPage.login();

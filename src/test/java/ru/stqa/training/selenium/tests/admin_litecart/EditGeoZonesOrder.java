@@ -19,7 +19,7 @@ public class EditGeoZonesOrder extends TestBase {
     }
 
     @Test
-    public void EditGeoZonesOrder() {
+    public void editGeoZonesOrder() {
         liteCartAdminPage.openGeoZonesApp();
         List<String> countriesWithZonesUrls = liteCartAdminPage.getZones();
 
