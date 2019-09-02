@@ -7,14 +7,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 public class LiteCartAdminPage {
 
     private static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
+    private static String CATALOG_PAGE = "http://localhost/litecart/admin/?app=catalog&doc=catalog";
     private static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
     private static String NEXT_TO_OPEN_ITEM_XPATH = "(//li[contains(@class,'selected')])[last()]/following::li";
     private static String APP_ITEM_CSS = "li#app-";
@@ -49,6 +52,11 @@ public class LiteCartAdminPage {
         return this;
     }
 
+    public LiteCartAdminPage openCatalogApp() {
+        driver.get(CATALOG_PAGE);
+        return this;
+    }
+
     public LiteCartAdminPage openGeoZonesApp() {
         driver.get(GEO_ZONES_PAGE);
         return this;
@@ -75,42 +83,45 @@ public class LiteCartAdminPage {
 
     public List<String> getNames() {
         int columnNumber = getHeaderColumnNumber("Name");
-        List<String> items = new ArrayList<String>();
+        List<String> items = new ArrayList<>();
         List<WebElement> rows = getRows();
-        for (WebElement row:rows) {
+        for (WebElement row : rows) {
             WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")"));
             if (!cellValue.getAttribute("textContent").equals("")) {
                 items.add(cellValue.getAttribute("textContent"));
             }
-        } return items;
+        }
+        return items;
     }
 
     public List<String> getZones() {
-        List<String> items = new ArrayList<String>();
+        List<String> items = new ArrayList<>();
         List<WebElement> rows = getRows();
         int columnNumber = getHeaderColumnNumber("Zones");
-        int UrlColumnNumber = columnNumber-1;
-        for (WebElement row:rows) {
+        int UrlColumnNumber = columnNumber - 1;
+        for (WebElement row : rows) {
             WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")"));
             if (!cellValue.getAttribute("textContent").equals("0")) {
                 items.add(row.findElement(By.cssSelector("td:nth-of-type(" + UrlColumnNumber + ") a")).getAttribute("href"));
             }
-        } return items;
+        }
+        return items;
     }
 
     public List<String> getZonesInMenu() {
         int columnNumber = getHeaderColumnNumber("Zone");
         List<String> items = new ArrayList<String>();
         List<WebElement> rows = getRows();
-        for (WebElement row:rows) {
-            if (!(row.findElement(By.cssSelector("td")).getAttribute("colspan") ==null)){
+        for (WebElement row : rows) {
+            if (!(row.findElement(By.cssSelector("td")).getAttribute("colspan") == null)) {
                 continue;
             }
             WebElement cellValue = row.findElement(By.cssSelector("td:nth-of-type(" + columnNumber + ")>select>option[selected='selected']"));
             if (!cellValue.getAttribute("textContent").equals("")) {
                 items.add(cellValue.getAttribute("textContent"));
             }
-        } return items;
+        }
+        return items;
     }
 
     public boolean isSorted(List<String> list) {
@@ -120,6 +131,111 @@ public class LiteCartAdminPage {
             }
         }
         return true;
+    }
+
+    public LiteCartAdminPage clickAddNewProductButton() {
+        driver.findElement(By.xpath("//a[contains(.,' Add New Product')]")).click();
+        return this;
+    }
+
+    public LiteCartAdminPage clickSaveButton() {
+        driver.findElement(By.xpath("//button[@type='submit'][contains(.,'Save')]")).click();
+        return this;
+    }
+
+    public LiteCartAdminPage fillInVaderDuckDetails() {
+        wait.until(presenceOfElementLocated(By.xpath("//h1[contains(.,' Add New Product')]")));
+        changeStatusToEnabled();
+        addProductName("Vader duck");
+//        wait();
+        setProductQuantity(5);
+        addProductImage("vader_duck.png");
+        clickInformationTab();
+        wait.until(presenceOfElementLocated(By.xpath("//li[@class='active'][contains(.,'Information')]")));
+        selectManufacturer("ACME Corp.");
+        clickPricesTab();
+        wait.until(presenceOfElementLocated(By.xpath("//li[@class='active'][contains(.,'Prices')]")));
+        setProductPurchasePrice(10);
+        setProductPurchaseCurrency("US Dollars");
+        setProductPrice(20);
+        return this;
+    }
+
+    private LiteCartAdminPage setProductPurchaseCurrency(String currency) {
+        selectItemFromDropDown(By.cssSelector("select[name='purchase_price_currency_code']"), currency);
+        return this;
+    }
+
+
+    private LiteCartAdminPage selectManufacturer(String optionName) {
+        selectItemFromDropDown(By.cssSelector("select[name='manufacturer_id']"), optionName);
+        return this;
+    }
+
+    private LiteCartAdminPage selectItemFromDropDown(By dropDownLocator, String optionName) {
+        driver.findElement(dropDownLocator).click();
+        driver.findElement(By.xpath("//option[contains(.,'" + optionName + "')]")).click();
+        return this;
+    }
+
+
+    private LiteCartAdminPage clickInformationTab() {
+        driver.findElement(By.xpath("//a[contains(.,'Information')]")).click();
+        return this;
+    }
+
+    private LiteCartAdminPage clickPricesTab() {
+        driver.findElement(By.xpath("//a[contains(.,'Prices')]")).click();
+
+        return this;
+    }
+
+    private LiteCartAdminPage setProductQuantity(int number) {
+        WebElement entryField = driver.findElement(By.cssSelector("input[name='quantity']"));
+        entryField.clear();
+        entryField.sendKeys(String.valueOf(number));
+        return this;
+
+    }
+
+    private LiteCartAdminPage setProductPurchasePrice(int number) {
+        WebElement entryField = driver.findElement(By.cssSelector("input[name='purchase_price']"));
+        entryField.clear();
+        entryField.sendKeys(String.valueOf(number));
+        return this;
+    }
+
+
+    private LiteCartAdminPage setProductPrice(int number) {
+        WebElement entryField = driver.findElement(By.cssSelector("input[name='prices[USD]']"));
+        entryField.clear();
+        entryField.sendKeys(String.valueOf(number));
+        return this;
+    }
+
+    private LiteCartAdminPage addProductName(String productName) {
+        driver.findElement(By.cssSelector("input[name*='name[']")).sendKeys(productName);
+        return this;
+    }
+
+
+    private LiteCartAdminPage changeStatusToEnabled() {
+        WebElement checkBoxEnabled = driver.findElement(By.xpath("//label[contains(.,'Enabled')]/input[@type='radio']"));
+        Boolean statusIsEnabled = "true".equals(checkBoxEnabled.getAttribute("checked"));
+        if (!statusIsEnabled) {
+            checkBoxEnabled.click();
+        }
+        return this;
+    }
+
+    private LiteCartAdminPage addProductImage(String imageName) {
+        String path = getUploadUrl(imageName);
+        driver.findElement(By.cssSelector("input[name='new_images[]']")).sendKeys(path);
+        return this;
+    }
+
+    private String getUploadUrl(String imageName) {
+        return Paths.get("src/test/resources/" + imageName).toAbsolutePath().toString();
     }
 
     private boolean isElementPresent(By locator) {

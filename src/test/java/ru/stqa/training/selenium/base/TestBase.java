@@ -2,6 +2,7 @@ package ru.stqa.training.selenium.base;
 
 import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -35,6 +36,7 @@ public class TestBase {
     protected void openHomePage() {
         driver.get(LITECART_HOME_PAGE_URL);
     }
+
 
     @AfterClass
     public void stop() {
