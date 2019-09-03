@@ -10,6 +10,7 @@ import ru.stqa.training.selenium.base.DriverHolder;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
@@ -42,7 +43,7 @@ public class LiteCartAdminPage {
     public LiteCartAdminPage clickAndCheckEachApp() {
         do {
             driver.findElement(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).click();
-            Assert.assertTrue(isElementPresent(By.cssSelector(GOOD_CONTENT)));
+            Assert.assertTrue(new LiteCartFragments().isElementPresent(By.cssSelector(GOOD_CONTENT)));
         } while (driver.findElements(By.xpath(NEXT_TO_OPEN_ITEM_XPATH)).size() != 0);
         return this;
     }
@@ -110,7 +111,7 @@ public class LiteCartAdminPage {
 
     public List<String> getZonesInMenu() {
         int columnNumber = getHeaderColumnNumber("Zone");
-        List<String> items = new ArrayList<String>();
+        List<String> items = new ArrayList<>();
         List<WebElement> rows = getRows();
         for (WebElement row : rows) {
             if (!(row.findElement(By.cssSelector("td")).getAttribute("colspan") == null)) {
@@ -162,21 +163,17 @@ public class LiteCartAdminPage {
     }
 
     private LiteCartAdminPage setProductPurchaseCurrency(String currency) {
-        selectItemFromDropDown(By.cssSelector("select[name='purchase_price_currency_code']"), currency);
+        new LiteCartFragments().selectItemFromDropDown(By.cssSelector("select[name='purchase_price_currency_code']"), currency);
         return this;
     }
 
 
     private LiteCartAdminPage selectManufacturer(String optionName) {
-        selectItemFromDropDown(By.cssSelector("select[name='manufacturer_id']"), optionName);
+        new LiteCartFragments().selectItemFromDropDown(By.cssSelector("select[name='manufacturer_id']"), optionName);
         return this;
     }
 
-    private LiteCartAdminPage selectItemFromDropDown(By dropDownLocator, String optionName) {
-        driver.findElement(dropDownLocator).click();
-        driver.findElement(By.xpath("//option[contains(.,'" + optionName + "')]")).click();
-        return this;
-    }
+
 
 
     private LiteCartAdminPage clickInformationTab() {
@@ -238,7 +235,13 @@ public class LiteCartAdminPage {
         return Paths.get("src/test/resources/" + imageName).toAbsolutePath().toString();
     }
 
-    private boolean isElementPresent(By locator) {
-        return driver.findElements(locator).size() != 0;
+
+    boolean isElementNotPresent(WebDriver driver, By locator) {
+        try {
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            return driver.findElements(locator).size() == 0;
+        } finally {
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        }
     }
 }

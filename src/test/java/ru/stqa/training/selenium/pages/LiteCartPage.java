@@ -82,4 +82,8 @@ public class LiteCartPage {
         return this;
     }
 
+    public LiteCartPage openFirstProduct() {
+        driver.findElement(By.cssSelector("li[class*='product']")).click();
+        return this;
+    }
 }
