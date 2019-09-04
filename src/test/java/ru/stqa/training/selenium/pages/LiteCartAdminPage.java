@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +26,7 @@ public class LiteCartAdminPage {
     private static String GOOD_CONTENT = "h1";
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     public LiteCartAdminPage login() {
         driver.findElement(By.name("username")).sendKeys("admin");
@@ -50,6 +51,11 @@ public class LiteCartAdminPage {
 
     public LiteCartAdminPage openCountriesApp() {
         driver.get(COUNTRIES_PAGE);
+        return this;
+    }
+
+    public LiteCartAdminPage addNewCountry() {
+        driver.findElement(By.cssSelector("a.button")).click();
         return this;
     }
 
