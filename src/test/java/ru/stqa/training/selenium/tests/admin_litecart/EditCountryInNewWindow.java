@@ -20,7 +20,7 @@ public class EditCountryInNewWindow extends TestBase {
     }
 
     @Test
-    public void eEditCountryInNewWindow() {
+    public void editCountryInNewWindow() {
         liteCartAdminPage.openCountriesApp()
                 .addNewCountry();
         liteCartEditCountryPage.openAndCloseEachFormLink();
