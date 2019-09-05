@@ -1,22 +1,50 @@
 package ru.stqa.training.selenium.base;
 
+import com.google.common.io.Files;
 import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.IOException;
+
 
 public class TestBase {
 
+
+    public static class MyListener extends AbstractWebDriverEventListener {
+        @Override
+        public void beforeFindBy(By by, WebElement element, WebDriver driver) {
+            System.out.println(by);
+        }
+
+        @Override
+        public void afterFindBy(By by, WebElement element, WebDriver driver) {
+            System.out.println(by +  " found");
+        }
+
+        @Override
+        public void onException(Throwable throwable, WebDriver driver) {
+            System.out.println(throwable);
+            File tmp =((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File screenShot = new File("screen-"+System.currentTimeMillis() + ".png");
+            try {
+                Files.copy(tmp, screenShot);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(screenShot);
+        }
+    }
+
+
     private static String LITECART_HOME_PAGE_URL = "http://localhost/litecart";
     private static String LITECART_ADMIN_HOME_PAGE_URL = "http://localhost/litecart/admin/";
-    private WebDriver driver;
+    private EventFiringWebDriver driver;
 
     @BeforeMethod
     public void setup() {
@@ -26,7 +54,7 @@ public class TestBase {
         WebDriverManager.getInstance(managerType).setup();
 
         DriverHolder.setDriver(managerType);
-        driver = DriverHolder.getDriver();
+        driver = new EventFiringWebDriver(DriverHolder.getDriver());
     }
 
     protected void openAdminHomePage() {

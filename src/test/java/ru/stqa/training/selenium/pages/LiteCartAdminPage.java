@@ -153,10 +153,9 @@ public class LiteCartAdminPage {
     public LiteCartAdminPage fillInVaderDuckDetails() {
         wait.until(presenceOfElementLocated(By.xpath("//h1[contains(.,' Add New Product')]")));
         changeStatusToEnabled();
-        addProductName("Vader duck");
-//        wait();
+        addProductName("Joker duck");
         setProductQuantity(5);
-        addProductImage("vader_duck.png");
+        addProductImage("joker_duck.png");
         clickInformationTab();
         wait.until(presenceOfElementLocated(By.xpath("//li[@class='active'][contains(.,'Information')]")));
         selectManufacturer("ACME Corp.");

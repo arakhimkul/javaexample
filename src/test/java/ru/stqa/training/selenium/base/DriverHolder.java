@@ -8,12 +8,13 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class DriverHolder {
 
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal();
+    private static ThreadLocal<EventFiringWebDriver> driver = new ThreadLocal();
 
 
     public DriverHolder() {
@@ -24,26 +25,31 @@ public class DriverHolder {
     }
 
     public static void setDriver(DriverManagerType driverManagerType) {
+        EventFiringWebDriver eventWebDriver;
         switch (driverManagerType) {
             case CHROME:
-                driver.set(new ChromeDriver());
+                 eventWebDriver = new EventFiringWebDriver(new ChromeDriver());
                 break;
             case FIREFOX:
-                driver.set(new FirefoxDriver());
+                 eventWebDriver = new EventFiringWebDriver(new FirefoxDriver());
                 break;
             case OPERA:
-                driver.set(new OperaDriver());
+                eventWebDriver = new EventFiringWebDriver(new OperaDriver());
                 break;
             case IEXPLORER:
-                driver.set(new InternetExplorerDriver());
+                eventWebDriver = new EventFiringWebDriver(new InternetExplorerDriver());
                 break;
             case EDGE:
-                driver.set(new EdgeDriver());
+                eventWebDriver = new EventFiringWebDriver(new EdgeDriver());
                 break;
             default:
                 throw new ParameterException("Unsupported browser");
         }
+        eventWebDriver.register(new TestBase.MyListener());
+        driver.set(eventWebDriver);
         driver.get().manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
     }
+
+
 }
 

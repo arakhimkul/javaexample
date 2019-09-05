@@ -1,6 +1,5 @@
 package ru.stqa.training.selenium.tests.admin_litecart;
 
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.training.selenium.base.TestBase;
@@ -19,7 +18,6 @@ public class AddNewProduct extends TestBase {
 
     @Test
     public void addNewProduct() {
-
         liteCartAdminPage.openCatalogApp()
                 .clickAddNewProductButton()
                 .fillInVaderDuckDetails()
