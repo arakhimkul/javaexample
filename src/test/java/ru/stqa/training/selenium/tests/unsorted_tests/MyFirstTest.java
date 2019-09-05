@@ -17,7 +17,7 @@ public class MyFirstTest extends TestBase {
     public void myFirstTest() {
         DriverHolder.getDriver().get("http://www.google.com");
         DriverHolder.getDriver().findElement(By.name("q")).sendKeys("webdriver");
-        DriverHolder.getDriver().findElement(By.name("ql")).sendKeys(Keys.RETURN); // Sending ENTER key
+        DriverHolder.getDriver().findElement(By.name("q")).sendKeys(Keys.RETURN); // Sending ENTER key
         WebDriverWait wait = new WebDriverWait(DriverHolder.getDriver(), Duration.ofSeconds(5));
         wait.until(titleIs("webdriver - Поиск в Google"));
     }

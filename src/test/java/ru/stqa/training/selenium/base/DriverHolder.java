@@ -4,13 +4,20 @@ import com.beust.jcommander.ParameterException;
 import io.github.bonigarcia.wdm.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.logging.LogEntry;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 public class DriverHolder {
 
@@ -28,10 +35,10 @@ public class DriverHolder {
         EventFiringWebDriver eventWebDriver;
         switch (driverManagerType) {
             case CHROME:
-                 eventWebDriver = new EventFiringWebDriver(new ChromeDriver());
+                eventWebDriver = new EventFiringWebDriver(new ChromeDriver());
                 break;
             case FIREFOX:
-                 eventWebDriver = new EventFiringWebDriver(new FirefoxDriver());
+                eventWebDriver = new EventFiringWebDriver(new FirefoxDriver());
                 break;
             case OPERA:
                 eventWebDriver = new EventFiringWebDriver(new OperaDriver());
@@ -48,6 +55,7 @@ public class DriverHolder {
         eventWebDriver.register(new TestBase.MyListener());
         driver.set(eventWebDriver);
         driver.get().manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
+        driver.get().manage().logs().get("browser").forEach(l -> System.out.println(l));
     }
 
 

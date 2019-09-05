@@ -10,6 +10,7 @@ import org.testng.Assert;
 import ru.stqa.training.selenium.base.DriverHolder;
 
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 public class LiteCartEditCountryPage {
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     public LiteCartEditCountryPage openAndCloseEachFormLink() {
         List<WebElement> allFormHyperLinks = driver.findElements(By.cssSelector("form a[target='_blank']"));
@@ -46,8 +47,6 @@ public class LiteCartEditCountryPage {
             return handles.size() > 0 ? handles.iterator().next() : null;
         };
     }
-
-
 
 
 //    private ExpectedCondition<String> newWindowAppeared(Set<String> oldWindows) {

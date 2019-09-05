@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.training.selenium.base.DriverHolder;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
@@ -16,7 +17,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.textToBe;
 public class LiteCartSubcategoryPage {
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
 
     public LiteCartProduct getProductObjectFromSubcategoryPage() {

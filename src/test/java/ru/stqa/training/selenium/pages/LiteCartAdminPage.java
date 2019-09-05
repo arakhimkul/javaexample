@@ -19,6 +19,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 public class LiteCartAdminPage {
 
     private static String COUNTRIES_PAGE = "http://localhost/litecart/admin/?app=countries&doc=countries";
+    private static String CATALOG_CATEGORIES_PAGE = "http://localhost/litecart/admin/?app=catalog&doc=catalog&category_id=1";
     private static String CATALOG_PAGE = "http://localhost/litecart/admin/?app=catalog&doc=catalog";
     private static String GEO_ZONES_PAGE = "http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones";
     private static String NEXT_TO_OPEN_ITEM_XPATH = "(//li[contains(@class,'selected')])[last()]/following::li";
@@ -49,8 +50,23 @@ public class LiteCartAdminPage {
         return this;
     }
 
+    public LiteCartAdminPage clickEachProduct() {
+String footerString = driver.findElement(By.xpath("//table[@class='dataTable']//td[contains(.,'Products: ')]")).getText();
+        int numberOfProducts = Character.getNumericValue(footerString.charAt(footerString.length()-1));
+        for (int index=0;index<numberOfProducts;index++){
+            driver.findElements(By.cssSelector("a[href*='product_id'][title='Edit']")).get(index).click();
+            driver.findElement(By.cssSelector("button[name='cancel'][value='Cancel']")).click();
+        }
+        return this;
+    }
+
     public LiteCartAdminPage openCountriesApp() {
         driver.get(COUNTRIES_PAGE);
+        return this;
+    }
+
+    public LiteCartAdminPage openCatalogCategories() {
+        driver.get(CATALOG_CATEGORIES_PAGE);
         return this;
     }
 

@@ -7,13 +7,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.training.selenium.base.DriverHolder;
 import ru.stqa.training.selenium.base.objects.LiteCartProduct;
 
+import java.time.Duration;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class LiteCartFragments {
 
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
     public LiteCartProduct liteCartProductSetObject(WebElement product) {
         LiteCartProduct liteCartProduct = new LiteCartProduct();

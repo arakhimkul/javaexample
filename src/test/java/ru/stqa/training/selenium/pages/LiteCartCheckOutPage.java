@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.stqa.training.selenium.base.DriverHolder;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
@@ -15,7 +16,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElements
 public class LiteCartCheckOutPage {
 
     private WebDriver driver = DriverHolder.getDriver();
-    WebDriverWait wait = new WebDriverWait(driver, 5);
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
 
     public LiteCartCheckOutPage removeAllProducts() {
