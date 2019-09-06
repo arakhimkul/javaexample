@@ -166,12 +166,12 @@ String footerString = driver.findElement(By.xpath("//table[@class='dataTable']//
         return this;
     }
 
-    public LiteCartAdminPage fillInVaderDuckDetails() {
+    public LiteCartAdminPage fillInNewDuckDetails(String duckName) {
         wait.until(presenceOfElementLocated(By.xpath("//h1[contains(.,' Add New Product')]")));
         changeStatusToEnabled();
-        addProductName("Joker duck");
+        addProductName(duckName+" duck");
         setProductQuantity(5);
-        addProductImage("joker_duck.png");
+        addProductImage(duckName+"_duck.png");
         clickInformationTab();
         wait.until(presenceOfElementLocated(By.xpath("//li[@class='active'][contains(.,'Information')]")));
         selectManufacturer("ACME Corp.");
@@ -180,6 +180,11 @@ String footerString = driver.findElement(By.xpath("//table[@class='dataTable']//
         setProductPurchasePrice(10);
         setProductPurchaseCurrency("US Dollars");
         setProductPrice(20);
+        return this;
+    }
+
+    public LiteCartAdminPage checkProductAppeared(String productName) {
+        Assert.assertTrue(new LiteCartFragments().isElementPresent(By.xpath("//a[contains(.,'"+productName+"')]")));
         return this;
     }
 
@@ -257,12 +262,5 @@ String footerString = driver.findElement(By.xpath("//table[@class='dataTable']//
     }
 
 
-    boolean isElementNotPresent(WebDriver driver, By locator) {
-        try {
-            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-            return driver.findElements(locator).size() == 0;
-        } finally {
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        }
-    }
+
 }
