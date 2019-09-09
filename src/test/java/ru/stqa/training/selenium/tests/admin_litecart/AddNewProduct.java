@@ -28,7 +28,7 @@ public class AddNewProduct extends TestBase {
                 .clickAddNewProductButton()
                 .fillInNewDuckDetails(productNames.get(randomInt))
                 .clickSaveButton()
-        .checkProductAppeared(productNames.get(randomInt));
+                .checkProductAppeared(productNames.get(randomInt));
 
 
     }
